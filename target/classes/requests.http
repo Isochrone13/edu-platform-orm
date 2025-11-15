@@ -1,0 +1,67 @@
+@host = http://localhost:8080
+
+### Все пользователи
+GET {{host}}/api/users
+
+### Создать пользователя (ожидаем 201 Created)
+POST {{host}}/api/users
+Content-Type: application/json
+
+{
+  "name": "New Student",
+  "email": "student@example.com",
+  "role": "STUDENT"
+}
+
+> {%
+    client.test("Создание пользователя — 201", function() {
+        client.assert(response.status === 201);
+    });
+    client.global.set("userLocation", response.headers.valueOf("Location"));
+%}
+
+### Получить созданного пользователя по Location
+GET {{host}}{{userLocation}}
+
+### Создать курс (201)
+POST {{host}}/api/courses
+Content-Type: application/json
+
+{
+  "title": "Hibernate Basics",
+  "description": "ORM course",
+  "categoryId": 1,
+  "teacherId": 2
+}
+
+> {%
+    client.test("Создание курса — 201", function() {
+        client.assert(response.status === 201);
+    });
+    client.global.set("courseId", response.body.id);
+%}
+
+### Записать студента на курс (201)
+POST {{host}}/api/enrollments
+Content-Type: application/json
+
+{
+  "studentId":  {{userLocation.split("/").pop()}},
+  "courseId":   {{courseId}}
+}
+
+> {%
+    client.test("Запись — 201", function() {
+        client.assert(response.status === 201);
+    });
+%}
+
+### Пример создания вопроса (enum type)
+POST {{host}}/api/quizzes/question
+Content-Type: application/json
+
+{
+  "quizId": 1,
+  "text": "2 + 2 = ?",
+  "type": "SINGLE_CHOICE"
+}

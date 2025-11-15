@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:edu_platform}
+    username: ${DB_USER:edu_platform}
+    password: ${DB_PASSWORD:edu_platform}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 25000
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+    properties:
+      hibernate.jdbc.time_zone: UTC
+      hibernate.default_batch_fetch_size: 50
+      hibernate.format_sql: true
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+      encoding: UTF-8
+  jackson:
+    time-zone: UTC
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+server:
+  port: ${PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

@@ -1,0 +1,13 @@
+services:
+  pg:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: edu_platform
+      POSTGRES_USER: edu_platform
+      POSTGRES_PASSWORD: edu_platform
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
