@@ -238,14 +238,14 @@ src/main/resources
 
 ### Домашние задания и решения
 
-Контроллер: `AssignmentController`, `SubmissionController`
+Контроллер: `AssignmentController`
 
 - `POST /api/assignments` — создание задания к уроку.
 - `POST /api/assignments/{assignmentId}/submit` — отправить решение по заданию.
 - `PUT /api/assignments/grade/{submissionId}` — оценить решение.
 
 
-  Контроллер: `AssignmentController`, `SubmissionController`
+Контроллер: `SubmissionController`
 - `POST /api/submissions` — отправка решения студентом.
 - `GET /api/submissions/{id}` — получить одно решение по ID.
 - `GET /api/submissions/assignment/{assignmentId}` — получить все решения по конкретному заданию.
